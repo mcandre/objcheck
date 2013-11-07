@@ -1,7 +1,13 @@
-all: example
+FLAGS=-Wall -Wextra -Wmost -framework Foundation -lobjc -o example
+
+all: test
+
+test: example
+	./example
 
 example: example.m ObjCheck.m ObjCheck.h
-	gcc -o example -framework foundation example.m ObjCheck.m
+	clang $(FLAGS) example.m ObjCheck.m
 
 clean:
+	-rm *.exe
 	-rm example

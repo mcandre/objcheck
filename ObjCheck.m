@@ -5,22 +5,22 @@
 @implementation NSObject (performSelectorWithArgs)
 
 - (id) performSelector: (SEL) sel withArgs: (NSArray *) args {
-	NSInvocation *inv = [NSInvocation invocationWithMethodSignature: [self methodSignatureForSelector: sel]];
-	[inv setSelector: sel];
-	[inv setTarget: self];
+  NSInvocation *inv = [NSInvocation invocationWithMethodSignature: [self methodSignatureForSelector: sel]];
+  [inv setSelector: sel];
+  [inv setTarget: self];
 
-	int i;
-	for (i = 0; i < [args count]; i++) {
-		id a = [args objectAtIndex: i];
-		[inv setArgument: &a atIndex: 2 + i]; // 0 is target, 1 i cmd-selector
-	}
+  NSUInteger i;
+  for (i = 0; i < [args count]; i++) {
+    id a = [args objectAtIndex: i];
+    [inv setArgument: &a atIndex: 2 + i]; // 0 is target, 1 i cmd-selector
+  }
 
-	[inv invoke];
+  [inv invoke];
 
-	NSNumber *r;
-	[inv getReturnValue: &r];
+  NSNumber *r;
+  [inv getReturnValue: &r];
 
-	return r;
+  return r;
 }
 
 @end
@@ -28,64 +28,66 @@
 @implementation ObjCheck
 
 + (NSNumber *) genNum {
-	return [NSNumber numberWithInt: arc4random()];
+  return [NSNumber numberWithInt: arc4random()];
 }
 
 + (NSNumber *) genBool {
-	return [NSNumber numberWithBool: arc4random() % 2 == 0 ];
+  return [NSNumber numberWithBool: arc4random() % 2 == 0 ];
 }
 
 + (NSNumber *) genChar {
-	return [NSNumber numberWithChar: (char) (arc4random() % 128)];
+  return [NSNumber numberWithChar: (char) (arc4random() % 128)];
 }
 
 + (NSArray *) genArray: (id(^)()) gen {
-	NSMutableArray* arr = [NSMutableArray array];
+  NSMutableArray* arr = [NSMutableArray array];
 
-	int len = arc4random() % 100;
+  int len = arc4random() % 100;
 
-	int i;
-	for (i = 0; i < len; i++) {
-		[arr addObject: gen()];
-	}
+  int i;
+  for (i = 0; i < len; i++) {
+    [arr addObject: gen()];
+  }
 
-	return arr;
+  return arr;
 }
 
 + (NSString *) genString {
-	NSArray* arr = [self genArray: ^() { return (id) [ObjCheck genChar]; }];
+  NSArray* arr = [self genArray: ^() { return (id) [ObjCheck genChar]; }];
 
-	NSMutableString* s = [NSMutableString stringWithCapacity: [arr count]];
+  NSMutableString* s = [NSMutableString stringWithCapacity: [arr count]];
 
-	int i;
-	for (i = 0; i < [arr count]; i++) {
-		[s appendString: [NSString stringWithFormat: @"%c", [[arr objectAtIndex: i] charValue]]];
-	}
+  NSUInteger i;
+  for (i = 0; i < [arr count]; i++) {
+    [s appendString: [NSString stringWithFormat: @"%c", [[arr objectAtIndex: i] charValue]]];
+  }
 
-	return s;
+  return s;
 }
 
-+ forAll: (id) target withProperty: (SEL) property withGenerators: (NSArray *) generators {
-	int i, j;
-	for (i = 0; i < 100; i++) {
-		NSArray* values = [NSMutableArray array];
++ (BOOL) forAll: (id) target withProperty: (SEL) property withGenerators: (NSArray *) generators {
+  NSUInteger i, j;
+  for (i = 0; i < 100; i++) {
+    NSArray* values = [NSMutableArray array];
 
-		for (j = 0; j < [generators count]; j++) {
-			id value = ((id(^)()) [generators objectAtIndex: j])();
+    for (j = 0; j < [generators count]; j++) {
+      id value = ((id(^)()) [generators objectAtIndex: j])();
 
-			values = [values arrayByAddingObject: value];
-		}
+      values = [values arrayByAddingObject: value];
+    }
 
-		NSNumber* propertyHolds = [target performSelector: property withArgs: values];
+    NSNumber* propertyHolds = [target performSelector: property withArgs: values];
 
-		if(![propertyHolds boolValue]) {
-			printf("*** Failed!\n%s\n", [[values description] UTF8String]);
+    if(![propertyHolds boolValue]) {
+      printf("*** Failed!\n%s\n", [[values description] UTF8String]);
 
-			return;
-		}
-	}
+      return NO;
+    }
+  }
 
-	printf("+++ OK, passed 100 tests.\n");
+  printf("+++ OK, passed 100 tests.\n");
+
+  return YES;
 }
 
 @end

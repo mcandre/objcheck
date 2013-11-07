@@ -7,17 +7,17 @@
 // From Mac Developer Tips
 // http://macdevelopertips.com/objective-c/objective-c-categories.html
 - (NSString *) reverse {
-	NSString *result;
+  NSString *result;
 
-	int len = [self length];
+  int len = [self length];
 
-	result = [NSMutableString stringWithCapacity: len];
+  result = [NSMutableString stringWithCapacity: len];
 
-	while (len > 0) {
-		result = [result stringByAppendingString: [NSString stringWithFormat: @"%c", [self characterAtIndex: --len]]];
-	}
+  while (len > 0) {
+    result = [result stringByAppendingString: [NSString stringWithFormat: @"%c", [self characterAtIndex: --len]]];
+  }
 
-	return result;
+  return result;
 }
 
 @end
@@ -25,54 +25,51 @@
 @implementation Example
 
 + (NSNumber *) isEven: (NSNumber *) i {
-	BOOL b = [i intValue] % 2 == 0;
+  BOOL b = [i intValue] % 2 == 0;
 
-	return [NSNumber numberWithBool: b];
+  return [NSNumber numberWithBool: b];
 }
 
 + (NSNumber *) genEven {
-	int i = [(NSNumber*)[ObjCheck genNum] intValue];
+  int i = [(NSNumber*)[ObjCheck genNum] intValue];
 
-	if(i % 2 != 0) {
-		i++;
-	}
+  if(i % 2 != 0) {
+    i++;
+  }
 
-	return [NSNumber numberWithInt: i];
+  return [NSNumber numberWithInt: i];
 }
 
 + (NSNumber *) reversible: (NSString *) s {
-	NSString* r = [s reverse];
-	NSString* s2 = [r reverse];
+  BOOL b = [s isEqualToString: [[s reverse] reverse]];
 
-	BOOL b = [s isEqualToString: [[s reverse] reverse]];
-
-	return [NSNumber numberWithBool: b];
+  return [NSNumber numberWithBool: b];
 }
 
 @end
 
-int main(int argc, char **argv) {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+int main() {
+  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
-	NSMutableArray* gs = [NSMutableArray array];
-	[gs addObject: ^() { return [ObjCheck genNum]; }];
-	
-	// Are all integers even?
-	[ObjCheck forAll: [Example class] withProperty: @selector(isEven:) withGenerators: gs];
-	
-	NSMutableArray* gs2 = [NSMutableArray array];
-	[gs2 addObject: ^() { return [Example genEven]; }];
-	
-	// Are all even integers even?
-	[ObjCheck forAll: [Example class] withProperty: @selector(isEven:) withGenerators: gs2];
+  NSMutableArray* gs = [NSMutableArray array];
+  [gs addObject: ^() { return [ObjCheck genNum]; }];
+  
+  // Are all integers even?
+  [ObjCheck forAll: [Example class] withProperty: @selector(isEven:) withGenerators: gs];
+  
+  NSMutableArray* gs2 = [NSMutableArray array];
+  [gs2 addObject: ^() { return [Example genEven]; }];
+  
+  // Are all even integers even?
+  [ObjCheck forAll: [Example class] withProperty: @selector(isEven:) withGenerators: gs2];
 
-	NSMutableArray* gs3 = [NSMutableArray array];
-	[gs3 addObject: ^() { return [ObjCheck genString]; }];
+  NSMutableArray* gs3 = [NSMutableArray array];
+  [gs3 addObject: ^() { return [ObjCheck genString]; }];
 
-	// Are all strings reversible?
-	[ObjCheck forAll: [Example class] withProperty: @selector(reversible:) withGenerators: gs3];
+  // Are all strings reversible?
+  [ObjCheck forAll: [Example class] withProperty: @selector(reversible:) withGenerators: gs3];
 
-	[pool drain];
+  [pool drain];
 
-	return 0;
+  return 0;
 }
