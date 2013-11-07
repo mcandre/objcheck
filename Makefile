@@ -1,4 +1,4 @@
-FLAGS=-Wall -Wextra -Wmost -framework Foundation -lobjc -o example
+FLAGS=-Wall -Wextra -Wmost -Weverything -framework Foundation -lobjc -o example
 
 all: test
 
