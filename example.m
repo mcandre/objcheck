@@ -9,7 +9,7 @@
 - (NSString *) reverse {
   NSString *result;
 
-  int len = [self length];
+  NSUInteger len = [self length];
 
   result = [NSMutableString stringWithCapacity: len];
 

@@ -5,14 +5,16 @@
 @implementation NSObject (performSelectorWithArgs)
 
 - (id) performSelector: (SEL) sel withArgs: (NSArray *) args {
-  NSInvocation *inv = [NSInvocation invocationWithMethodSignature: [self methodSignatureForSelector: sel]];
+  NSInvocation *inv = [NSInvocation invocationWithMethodSignature:
+                                 [self methodSignatureForSelector: sel]];
+
   [inv setSelector: sel];
   [inv setTarget: self];
 
   NSUInteger i;
   for (i = 0; i < [args count]; i++) {
-    id a = [args objectAtIndex: i];
-    [inv setArgument: &a atIndex: 2 + i]; // 0 is target, 1 i cmd-selector
+    id a = args[i];
+    [inv setArgument: &a atIndex: (NSInteger) (2 + i)]; // 0 is target, 1 i cmd-selector
   }
 
   [inv invoke];
@@ -28,7 +30,7 @@
 @implementation ObjCheck
 
 + (NSNumber *) genNum {
-  return [NSNumber numberWithInt: arc4random()];
+  return [NSNumber numberWithInt: (int) arc4random()];
 }
 
 + (NSNumber *) genBool {
@@ -59,7 +61,7 @@
 
   NSUInteger i;
   for (i = 0; i < [arr count]; i++) {
-    [s appendString: [NSString stringWithFormat: @"%c", [[arr objectAtIndex: i] charValue]]];
+    [s appendString: [NSString stringWithFormat: @"%c", [arr[i] charValue]]];
   }
 
   return s;
@@ -71,7 +73,7 @@
     NSArray* values = [NSMutableArray array];
 
     for (j = 0; j < [generators count]; j++) {
-      id value = ((id(^)()) [generators objectAtIndex: j])();
+      id value = ((id(^)()) generators[j])();
 
       values = [values arrayByAddingObject: value];
     }
