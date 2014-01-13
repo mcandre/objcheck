@@ -2,18 +2,18 @@
 
 @interface NSObject (performSelectorWithArgs)
 
-- (id) performSelector: (SEL) sel withArgs: (NSArray *) args;
+- (id) performSelector: (const SEL) sel withArgs: (NSArray*) args;
 
 @end
 
 @interface ObjCheck: NSObject {}
 
-+ (NSNumber *) genNum;
-+ (NSNumber *) genBool;
-+ (NSNumber *) genChar;
-+ (NSArray *) genArray: (id(^)()) gen;
-+ (NSString *) genString;
++ (NSNumber*) genNum;
++ (NSNumber*) genBool;
++ (NSNumber*) genChar;
++ (NSArray*) genArray: (id(^)()) gen;
++ (NSString*) genString;
 
-+ (BOOL) forAll: (id) target withProperty: (SEL) property withGenerators: (NSArray *) generators;
++ (BOOL) forAll: (const id) target withProperty: (const SEL) property withGenerators: (const NSArray*) generators;
 
 @end

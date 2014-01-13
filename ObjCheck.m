@@ -4,9 +4,9 @@
 
 @implementation NSObject (performSelectorWithArgs)
 
-- (id) performSelector: (SEL) sel withArgs: (NSArray *) args {
-  NSInvocation *inv = [NSInvocation invocationWithMethodSignature:
-                                 [self methodSignatureForSelector: sel]];
+- (id) performSelector: (const SEL) sel withArgs: (NSArray*) args {
+  const NSInvocation* inv = [NSInvocation invocationWithMethodSignature:
+                                       [self methodSignatureForSelector: sel]];
 
   [inv setSelector: sel];
   [inv setTarget: self];
@@ -19,7 +19,7 @@
 
   [inv invoke];
 
-  NSNumber *r;
+  NSNumber* r;
   [inv getReturnValue: &r];
 
   return r;
@@ -29,22 +29,22 @@
 
 @implementation ObjCheck
 
-+ (NSNumber *) genNum {
++ (NSNumber*) genNum {
   return [NSNumber numberWithInt: (int) arc4random()];
 }
 
-+ (NSNumber *) genBool {
++ (NSNumber*) genBool {
   return [NSNumber numberWithBool: arc4random() % 2 == 0 ];
 }
 
-+ (NSNumber *) genChar {
++ (NSNumber*) genChar {
   return [NSNumber numberWithChar: (char) (arc4random() % 128)];
 }
 
-+ (NSArray *) genArray: (id(^)()) gen {
++ (NSArray*) genArray: (id(^)()) gen {
   NSMutableArray* arr = [NSMutableArray array];
 
-  int len = arc4random() % 100;
+  const int len = arc4random() % 100;
 
   int i;
   for (i = 0; i < len; i++) {
@@ -54,7 +54,7 @@
   return arr;
 }
 
-+ (NSString *) genString {
++ (NSString*) genString {
   NSArray* arr = [self genArray: ^() { return (id) [ObjCheck genChar]; }];
 
   NSMutableString* s = [NSMutableString stringWithCapacity: [arr count]];
@@ -67,7 +67,7 @@
   return s;
 }
 
-+ (BOOL) forAll: (id) target withProperty: (SEL) property withGenerators: (NSArray *) generators {
++ (BOOL) forAll: (const id) target withProperty: (const SEL) property withGenerators: (const NSArray*) generators {
   NSUInteger i, j;
   for (i = 0; i < 100; i++) {
     NSArray* values = [NSMutableArray array];
@@ -78,9 +78,9 @@
       values = [values arrayByAddingObject: value];
     }
 
-    NSNumber* propertyHolds = [target performSelector: property withArgs: values];
+    const NSNumber* propertyHolds = [target performSelector: property withArgs: values];
 
-    if(![propertyHolds boolValue]) {
+    if (![propertyHolds boolValue]) {
       printf("*** Failed!\n%s\n", [[values description] UTF8String]);
 
       return NO;

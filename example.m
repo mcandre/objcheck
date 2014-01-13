@@ -6,8 +6,8 @@
 
 // From Mac Developer Tips
 // http://macdevelopertips.com/objective-c/objective-c-categories.html
-- (NSString *) reverse {
-  NSString *result;
+- (NSString*) reverse {
+  NSString* result;
 
   NSUInteger len = [self length];
 
@@ -24,24 +24,25 @@
 
 @implementation Example
 
-+ (NSNumber *) isEven: (NSNumber *) i {
-  BOOL b = [i intValue] % 2 == 0;
++ (NSNumber*) isEven: (const NSNumber*) i {
+  const BOOL b = [i intValue] % 2 == 0;
 
   return [NSNumber numberWithBool: b];
 }
 
-+ (NSNumber *) genEven {
-  int i = [(NSNumber*)[ObjCheck genNum] intValue];
++ (NSNumber*) genEven {
+  const int i = [(NSNumber*) [ObjCheck genNum] intValue];
 
-  if(i % 2 != 0) {
-    i++;
+  if (i % 2 != 0) {
+    return [NSNumber numberWithInt: i + 1];
   }
-
-  return [NSNumber numberWithInt: i];
+  else {
+    return [NSNumber numberWithInt: i];
+  }
 }
 
-+ (NSNumber *) reversible: (NSString *) s {
-  BOOL b = [s isEqualToString: [[s reverse] reverse]];
++ (NSNumber*) reversible: (const NSString*) s {
+  const BOOL b = [s isEqualToString: [[s reverse] reverse]];
 
   return [NSNumber numberWithBool: b];
 }
@@ -49,7 +50,7 @@
 @end
 
 int main() {
-  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+  const NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 
   NSMutableArray* gs = [NSMutableArray array];
   [gs addObject: ^() { return [ObjCheck genNum]; }];
