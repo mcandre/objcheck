@@ -23,8 +23,11 @@
 * [Bundler](http://bundler.io/)
 * [Cucumber](http://cukes.info/)
 * [Guard](http://guardgem.org/)
+* [aspelllint](https://github.com/mcandre/aspelllint)
 
-# TESTING
+# DEVELOPMENT
+
+## Test
 
 Ensure the example script works as expected:
 
@@ -39,6 +42,13 @@ Ensure the example script works as expected:
     1 scenario (1 passed)
     2 steps (2 passed)
     0m0.612s
+
+## Spell Check
+
+    $ aspelllint
+    ...
+
+## Local CI
 
 Guard can automatically run testing when the code changes:
 
