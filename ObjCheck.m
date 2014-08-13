@@ -34,17 +34,17 @@
 }
 
 + (NSNumber*) genBool {
-  return [NSNumber numberWithBool: arc4random() % 2 == 0 ];
+  return [NSNumber numberWithBool: arc4random(2) == 0 ];
 }
 
 + (NSNumber*) genChar {
-  return [NSNumber numberWithChar: (char) (arc4random() % 128)];
+  return [NSNumber numberWithChar: (char) (arc4random(128))];
 }
 
 + (NSArray*) genArray: (id(^)()) gen {
   NSMutableArray* arr = [NSMutableArray array];
 
-  const int len = arc4random() % 100;
+  const int len = arc4random(100);
 
   int i;
   for (i = 0; i < len; i++) {
