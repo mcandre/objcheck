@@ -7,13 +7,13 @@ end
 Then(/^the output is correct for each test$/) do
   lines = @cucumber.split("\n")
 
-  lines.length.should == 8
+  expect(lines.length).to eq(8)
 
-  lines[0 .. 1].join("\n").should == 'clang -Wall -Wextra -Wmost -Weverything -framework Foundation -lobjc -o example example.m ObjCheck.m
-./example'
+  expect(lines[0 .. 1].join("\n")).to eq('clang -Wall -Wextra -Wmost -Weverything -framework Foundation -lobjc -o bin/example example.m ObjCheck.m
+bin/example')
 
-  lines[2].should == '*** Failed!'
-  lines[3 .. 5].join("\n").should =~ /^\(\n(\s){4}(\"\-)?[0-9]+(\")?\n\)/m
-  lines[6].should == '+++ OK, passed 100 tests.'
-  lines[7].should == '+++ OK, passed 100 tests.'
+  expect(lines[2]).to eq('*** Failed!')
+  expect(lines[3 .. 5].join("\n")).to match(/^\(\n(\s){4}(\"\-)?[0-9]+(\")?\n\)/m)
+  expect(lines[6]).to eq('+++ OK, passed 100 tests.')
+  expect(lines[7]).to eq('+++ OK, passed 100 tests.')
 end
