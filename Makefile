@@ -1,3 +1,5 @@
+BIN=bin/example
+
 FLAGS=-Wall -Wextra -Wmost -Weverything -framework Foundation -lobjc
 LINUX_FLAGS=
 
@@ -12,10 +14,10 @@ endif
 
 all: test
 
-test: example
-	./example
+test: $(BIN)
+	$(BIN)
 
-example: example.m ObjCheck.m ObjCheck.h
+$(BIN): example.m ObjCheck.m ObjCheck.h
 	clang $(FLAGS) $(LINUX_FLAGS) -o $(BIN) example.m ObjCheck.m
 
 oclint:
@@ -27,5 +29,4 @@ editorconfig:
 lint: oclint editorconfig
 
 clean:
-	-rm *.exe
-	-rm example
+	-rm -rf bin/
