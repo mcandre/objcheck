@@ -54,13 +54,13 @@ int main() {
 
   NSMutableArray* gs = [NSMutableArray array];
   [gs addObject: ^() { return [ObjCheck genNum]; }];
-  
+
   // Are all integers even?
   [ObjCheck forAll: [Example class] withProperty: @selector(isEven:) withGenerators: gs];
-  
+
   NSMutableArray* gs2 = [NSMutableArray array];
   [gs2 addObject: ^() { return [Example genEven]; }];
-  
+
   // Are all even integers even?
   [ObjCheck forAll: [Example class] withProperty: @selector(isEven:) withGenerators: gs2];
 

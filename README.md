@@ -8,7 +8,7 @@ http://www.yellosoft.us/quickcheck
 
 ```
 $ make
-$ ./example 
+$ ./example
 *** Failed!
 -1243731847
 +++ OK, passed 100 tests.
