@@ -28,6 +28,10 @@ See [example.m](https://github.com/mcandre/objcheck/blob/master/example.m) for m
 * [Cucumber](http://cukes.info/)
 * [Guard](http://guardgem.org/)
 * [aspelllint](https://github.com/mcandre/aspelllint)
+* [Python](https://www.python.org/) 2.7 (for infer)
+* [infer](http://fbinfer.com/)
+
+E.g., `brew install infer
 
 # DEVELOPMENT
 

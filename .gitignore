@@ -1,4 +1,5 @@
 bin/
+infer-out/
 # Created by https://www.gitignore.io/api/objective-c,node,ruby
 
 ### Objective-C ###

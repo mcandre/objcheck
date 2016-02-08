@@ -35,7 +35,10 @@ astyle:
 clean-astyle:
 	-find . -type f -name "*.orig" -exec rm {} \;
 
-lint: oclint editorconfig astyle
+infer: clean
+	infer -- make
+
+lint: oclint editorconfig astyle #infer
 
 clean: clean-astyle
 	-rm -rf bin/
