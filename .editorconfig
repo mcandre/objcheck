@@ -30,8 +30,8 @@ indent_style = space
 [{*.md,*.markdown}]
 indent_size = none
 
-# PEP8
-[*.py]
+# PEP8, Docker
+[{*.py,Dockerfile*}]
 indent_size = 4
 
 # JavaScript
@@ -43,9 +43,13 @@ quote_type = single
 indent_size = none
 
 # Pagragraph-oriented text
-[{*.txt,*.text,*.xml,*.*htm*,*.erb,*.tex,*.md,*.markdown,*.textile,*.ps,Makefile*,Rakefile*,*.mf,*.plist,*.bat,*.*sh,.*profile*,.editorconfig,.gitignore*,.*rc*,*.profile,*.epf,*.cfg}]
+[{*.txt,*.text,*.xml,*.*htm*,*.erb,*.tex,*.md,*.markdown,*.textile,*.ps,Makefile*,Rakefile*,*.mf,*.plist,*.bat,*.*sh,.*profile*,.editorconfig,.gitignore*,.*rc*,*.profile,*.epf,*.cfg,Dockerfile*}]
 max_line_length = none
 
+# Bashate
+[{*.sh,*.profile*,*.bash*}]
+indent_size = 4
+
 # Windows files
-[{*.bat,*reg,*.ps1,*.vbs,*.cs,*.csproj,*.fs,*.sln,*.xaml*,*.ahk}]
+[{*.cmd,*.bat,*reg,*.ps1,*.vbs,*.cs,*.csproj,*.fs,*.sln,*.xaml*,*.ahk}]
 end_of_line = crlf

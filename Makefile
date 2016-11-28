@@ -18,6 +18,7 @@ test: $(BIN)
 	$(BIN)
 
 $(BIN): example.m ObjCheck.m ObjCheck.h
+	mkdir -p bin
 	clang $(FLAGS) $(LINUX_FLAGS) -o $(BIN) example.m ObjCheck.m
 
 oclint:
@@ -41,4 +42,4 @@ infer: clean
 lint: oclint editorconfig astyle #infer
 
 clean: clean-astyle
-	-rm -rf bin/
+	-rm -rf bin
