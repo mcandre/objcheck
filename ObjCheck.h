@@ -15,6 +15,6 @@
 + (NSString *) genString;
 
 + (BOOL) forAll: (const id) target withProperty: (const SEL) property
-  withGenerators: (const NSArray *) generators;
+    withGenerators: (const NSArray *) generators;
 
 @end
